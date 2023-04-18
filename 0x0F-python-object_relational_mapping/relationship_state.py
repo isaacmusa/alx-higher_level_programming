@@ -1,20 +1,20 @@
 #!/usr/bin/python3
-"""
-Class definition of a State with inheritage from Base
-"""
-from sqlalchemy.orm import relationship
-from sqlalchemy import Column, Integer, String
+""" Define State model """
 from sqlalchemy.ext.declarative import declarative_base
-
+from sqlalchemy import Column, String, Integer
+from sqlalchemy.orm import relationship
 
 Base = declarative_base()
 
 
 class State(Base):
-    """
-    State Class
-    """
-    __tablename__ = "states"
-    id = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
+    """ Define a class State to be linked to db table """
+    __tablename__ = 'states'
+
+    id = Column(Integer, nullable=False,
+                autoincrement=True, unique=True,
+                primary_key=True)
+
     name = Column(String(128), nullable=False)
-    cities = relationship("City", backref="state", cascade="delete")
+
+    cities = relationship('City', cascade='all, delete', backref='state')
